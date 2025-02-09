@@ -1,0 +1,22 @@
+#!/bin/bash
+#----------------------------------------------------
+# Slurm job script
+#   for Expanse
+#
+#----------------------------------------------------
+
+#SBATCH -J sM1_02-08-2025_01          # Job name
+#SBATCH -o sM1_02-08-2025_01.o%j       # Name of stdout output file
+#SBATCH -e sM1_02-08-2025_01.e%j       # Name of stderr error file
+#SBATCH -A [YOUR ACCOUNT IDENTIFIER]
+#SBATCH -p compute   	# Queue (partition) name
+#SBATCH -N 4               # Total # of nodes (must be 1 for serial)
+#SBATCH --ntasks-per-node=128          # Total # of mpi tasks (should be 1 for serial)
+#SBATCH --mem=128G
+#SBATCH --export=ALL
+#SBATCH -t 02:00:00        # Run time (hh:mm:ss)
+#SBATCH --mail-user=[YOUR EMAIL ADDRESS]
+#SBATCH --mail-type=all    # Send email at begin and end of job
+mpirun -n 512 nrniv -python -mpi init.py
+
+# ---------------------------------------------------
